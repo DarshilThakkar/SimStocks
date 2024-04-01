@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
   import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+  import {getDatabase} from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,6 +26,7 @@ const auth = getAuth();
 //----- New Registration code start	  
 document.getElementById("register").addEventListener("click", function(event) {
   event.preventDefault();
+  var name= document.getElementById("yourName").value;
   var email =  document.getElementById("UserEmail").value;
   var password = document.getElementById("UserPassword").value;
   //For new registration
@@ -32,6 +34,11 @@ document.getElementById("register").addEventListener("click", function(event) {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
+    const db=getDatabase();
+    const reference = ref(db,'users/' + email);
+    set(reference,{
+      username : name
+    });
     console.log(user);
     alert("Registration successfully!!");
     // ...
@@ -42,26 +49,28 @@ document.getElementById("register").addEventListener("click", function(event) {
     // ..
     console.log(errorMessage);
     alert(error);
-  });		  		  
+  });		  		
+
+
 });
 //----- End
 
 
-//----- End
+// //----- End
 
-//----- Logout code start	  
-document.getElementById("logout").addEventListener("click", function() {
-  event.preventDefault();
-  signOut(auth).then(() => {
-    // Sign-out successful.
-    console.log('Sign-out successful.');
-    alert('Sign-out successful.');
-    document.getElementById('logout').style.display = 'none';
-  }).catch((error) => {
-    // An error happened.
-    console.log('An error happened.');
-  });		  		  
-});
+// //----- Logout code start	  
+// document.getElementById("logout").addEventListener("click", function() {
+//   event.preventDefault();
+//   signOut(auth).then(() => {
+//     // Sign-out successful.
+//     console.log('Sign-out successful.');
+//     alert('Sign-out successful.');
+//     document.getElementById('logout').style.display = 'none';
+//   }).catch((error) => {
+//     // An error happened.
+//     console.log('An error happened.');
+//   });		  		  
+// });
 //----- End
 
 //console.log(app);
