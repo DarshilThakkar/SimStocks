@@ -188,7 +188,7 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
         import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-        import {getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+        import {getDatabase, ref, set , onValue, child, get} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -216,19 +216,16 @@
         var email =  document.getElementById("UserEmail").value;
         var password = document.getElementById("UserPassword").value;
         let flag = false;
+        const dbRef = ref(getDatabase());
         const db=getDatabase();
         const reference = ref(db,'users/' + name);
-        if(reference==null)
-        {
-            flag=true;
-        }
-        else
-        {
-          alert("Username is already taken.");
-        }
-        if(flag)
-        {
-          //For new registration
+        const newref = ref(db,'users/' + name)
+        get(child(dbRef, 'users/' +name)).then((snapshot) => {
+        if (snapshot.exists()) {
+          flag=false;
+          alert("Username already exists!!");
+          console.log(snapshot.val());
+        } else {
           createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in
@@ -238,15 +235,24 @@
             });
             console.log(user);
             alert("Registration successfully!!");
-            // ...
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            // ..
             console.log(errorMessage);
             alert(error);
           });
+          //console.log("No data available");
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+      console.log(flag);  
+        if(flag)
+        {
+          console.log(1);
+          //For new registration
+          
         }
       });
     </script>
