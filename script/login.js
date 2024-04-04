@@ -53,24 +53,3 @@ document.getElementById("register").addEventListener("click", function(event) {
 
 
 });
-//----- End
-
-
-// //----- End
-
-// //----- Logout code start	  
-// document.getElementById("logout").addEventListener("click", function() {
-//   event.preventDefault();
-//   signOut(auth).then(() => {
-//     // Sign-out successful.
-//     console.log('Sign-out successful.');
-//     alert('Sign-out successful.');
-//     document.getElementById('logout').style.display = 'none';
-//   }).catch((error) => {
-//     // An error happened.
-//     console.log('An error happened.');
-//   });		  		  
-// });
-//----- End
-
-//console.log(app);

@@ -64,11 +64,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const userData = JSON.parse(userDataString);
         
         // Display the user data on the page
-        console.log(userData);
-        const userDataContainer = document.getElementById('Profile');
-        userDataContainer.innerHTML = `<h5>${userData.username} ${userData.email}</h5>`;
+        // console.log(userData);
+        const userDataContainer1 = document.getElementsByClassName('Username');
+        for (let i = 0; i < userDataContainer1.length; i++)
+        {
+            userDataContainer1[i].innerHTML = `${userData.username}`;
+        }
+        
+        const userDataContainer2 = document.getElementsByClassName('Email');
+        for (let i = 0; i < userDataContainer2.length; i++)
+        {
+            userDataContainer2[i].innerHTML = `${userData.email}`;
+        }
+
     } else {
-        // Handle case when data is not found in session storage
-        console.log('User data not found in session storage');
+        window.location.replace("pages-login.html");
     }
 });
