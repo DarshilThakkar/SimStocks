@@ -66,8 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Display the user data on the page
         console.log(userData);
         const userDataContainer = document.getElementById('Profile');
-        userDataContainer.innerHTML = `<p>User Name: ${userData.username}</p>
-                                      <p>Email: ${userData.email}</p>`;
+        userDataContainer.innerHTML = `<h5>${userData.username} ${userData.email}</h5>`;
     } else {
         // Handle case when data is not found in session storage
         console.log('User data not found in session storage');
