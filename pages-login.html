@@ -81,18 +81,18 @@
 
                     <form id="log" class="row g-3 needs-validation" novalidate>
                       <div class="col-12">
-                        <label for="UserEmaillogin" class="form-label"
-                          >Your Email</label
+                        <label for="yourName" class="form-label"
+                          >Your Name</label
                         >
                         <input
-                          type="email"
-                          name="email"
+                          type="text"
+                          name="name"
                           class="form-control"
-                          id="UserEmaillogin"
+                          id="yourName"
                           required
                         />
                         <div class="invalid-feedback">
-                          Please enter a valid Email adddress!
+                          Please, enter your name!
                         </div>
                       </div>
 
@@ -177,6 +177,7 @@
         signInWithEmailAndPassword,
         signOut,
       } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+      import {getDatabase, ref, set , onValue, child, get} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -202,16 +203,46 @@
         .addEventListener("click", function (event) {
           event.preventDefault();
           console.log(1);
-          var email = document.getElementById("UserEmaillogin").value;
+          var name = document.getElementById("yourName").value;
           var password = document.getElementById("UserPasswordlogin").value;
-
+          const dbRef = ref(getDatabase());
+          var email;
+          get(child(dbRef, 'users/' +name)).then((snapshot) => {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            email=userData["email"];
+          }
+          else
+          {
+            alert("Username do not exist");
+          }
+          sessionStorage.clear();
           signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               console.log(1);
               // Signed in
               const user = userCredential.user;
               console.log(user);
-              window.location.replace("index.html");  
+              const dbRef = ref(getDatabase());
+              get(child(dbRef, 'users/' +name + '/')).then((snapshot) => {
+              if (snapshot.exists()) {
+                const userData = snapshot.val();
+                console.log(userData["siddh"]);
+                const Username=JSON.stringify(userData.username);
+                sessionStorage.setItem("Username",Username);
+                const userDataString = JSON.stringify(userData)
+                sessionStorage.setItem("UserCredential",userDataString);
+              }
+            }).then(()=>
+            {
+              window.location.replace("index.html");
+            });
+              //var storedUsername = sessionStorage.setItem("username",user)
+              // sessionStorage.setItem('user', true)
+              // setEmail(email);
+              // setPassword(password);
+              // router.push('index.html');
+              //res.render("index.html");  
               //document.getElementById("logout").style.display = "block";
               // ...
               

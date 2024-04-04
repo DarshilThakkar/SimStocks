@@ -231,7 +231,8 @@
             // Signed in
             const user = userCredential.user;
             set(reference,{
-              username : name
+              username : name,
+              email : email
             });
             console.log(user);
             alert("Registration successfully!!");

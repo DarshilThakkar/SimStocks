@@ -54,3 +54,22 @@ function displayStockProfile(data) {
       <p><strong>Web URL:</strong> <a href = "${data.weburl}" target="_blank">${data.weburl}</a></p>
   `;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve data from session storage
+    const userDataString = sessionStorage.getItem('UserCredential');
+    
+    if (userDataString) {
+        // Parse the JSON string to get the JavaScript object
+        const userData = JSON.parse(userDataString);
+        
+        // Display the user data on the page
+        console.log(userData);
+        const userDataContainer = document.getElementById('Profile');
+        userDataContainer.innerHTML = `<p>User Name: ${userData.name}</p>
+                                      <p>Email: ${userData.email}</p>`;
+    } else {
+        // Handle case when data is not found in session storage
+        console.log('User data not found in session storage');
+    }
+});
