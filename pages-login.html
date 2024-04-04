@@ -177,7 +177,14 @@
         signInWithEmailAndPassword,
         signOut,
       } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-      import {getDatabase, ref, set , onValue, child, get} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+        onValue,
+        child,
+        get,
+      } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
       // TODO: Add SDKs for Firebase products that you want to use
       // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -207,45 +214,53 @@
           var password = document.getElementById("UserPasswordlogin").value;
           const dbRef = ref(getDatabase());
           var email;
-          get(child(dbRef, 'users/' +name)).then((snapshot) => {
-          if (snapshot.exists()) {
-            const userData = snapshot.val();
-            email=userData["email"];
-          }
-          else
-          {
-            alert("Username do not exist");
-          }
-          sessionStorage.clear();
-          signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-              console.log(1);
-              // Signed in
-              const user = userCredential.user;
-              console.log(user);
-              const dbRef = ref(getDatabase());
-              get(child(dbRef, 'users/' +name + '/')).then((snapshot) => {
+          get(child(dbRef, "users/" + name))
+            .then((snapshot) => {
               if (snapshot.exists()) {
                 const userData = snapshot.val();
-                console.log(userData["siddh"]);
-                const Username=JSON.stringify(userData.username);
-                sessionStorage.setItem("Username",Username);
-                const userDataString = JSON.stringify(userData)
-                sessionStorage.setItem("UserCredential",userDataString);
+                console.log(userData);
+                email = userData["email"];
+              } else {
+                alert("Username do not exist");
               }
-            }).then(()=>
-            {
-              window.location.replace("index.html");
-            });
+            })
+            .then(() => {
+              console.log(email);
+              sessionStorage.clear();
+              signInWithEmailAndPassword(auth, email, password).then(
+                (userCredential) => {
+                  console.log(1);
+                  // Signed in
+                  const user = userCredential.user;
+                  console.log(user);
+                  const dbRef = ref(getDatabase());
+                  get(child(dbRef, "users/" + name + "/"))
+                    .then((snapshot) => {
+                      if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        console.log(userData[name]);
+                        const Username = JSON.stringify(userData.username);
+                        sessionStorage.setItem("Username", Username);
+                        const userDataString = JSON.stringify(userData);
+                        sessionStorage.setItem(
+                          "UserCredential",
+                          userDataString
+                        );
+                      }
+                    })
+                    .then(() => {
+                      window.location.replace("index.html");
+                    });
+                }
+              );
               //var storedUsername = sessionStorage.setItem("username",user)
               // sessionStorage.setItem('user', true)
               // setEmail(email);
               // setPassword(password);
               // router.push('index.html');
-              //res.render("index.html");  
+              //res.render("index.html");
               //document.getElementById("logout").style.display = "block";
               // ...
-              
             })
             .catch((error) => {
               const errorCode = error.code;
