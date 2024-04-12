@@ -52,8 +52,61 @@ function displayStockProfile(data) {
       <p><strong>Exchange:</strong> ${data.exchange}</p>
       <p><strong>Market Capitalization:</strong> ${data.marketCapitalization}</p>
       <p><strong>Web URL:</strong> <a href = "${data.weburl}" target="_blank">${data.weburl}</a></p>
+      <button type="button" class="btn btn-success" onclick="openDialog()" style='width:18%'>Buy</button>
+    <button type="button" class="btn btn-danger" style='width:18%'>Sell</button>
+    <div id="dialog" class="dialog-container">
+    <div class="dialog-box">
+        <h2>Confirm Buy</h2>
+        <h2 id="calcprice">Current price: </h2>
+        <div class="form-field">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" onchange="calculator()" name="quantity" min="1" required>
+        </div>
+        <button class="btn btn-success" onclick="confirmBuy()">Confirm Buy</button>
+    </div>
+    </div>
   `;
 }
+
+
+  // function openDialog() {
+  //   const dialog = document.getElementById('dialog');
+  //   var currprice=document.getElementById("price").textContent;
+  //   console.log(currprice);
+  //   document.getElementById("calcprice").textContent=currprice;
+  //   dialog.style.display = 'flex';
+  //   document.addEventListener('click', closeDialogOutside);
+  // }
+
+  // function closeDialog() {
+  //   const dialog = document.getElementById('dialog');
+  //   dialog.style.display = 'none';
+  //   document.removeEventListener('click', closeDialogOutside);
+  // }
+
+  // function closeDialogOutside(event) {
+  //   const dialog = document.getElementById('dialog');
+  //   if (event.target === dialog) {
+  //     closeDialog();
+  //   }
+  // }
+
+  // function calculator(){
+  //   var finalprice=document.getElementById("price").textContent;
+  //   finalprice=
+  //   var quan=document.getElementById("quantity").textContent;
+  //   calcprice=finalprice*quan;
+  //   console.log(calcprice);
+  //   document.getElementById("calcprice").textContent=calcprice;
+  // }
+
+  // function confirmBuy() {
+  //   const dialog = document.getElementById('dialog');
+  //   var quantity = document.getElementById('quantity').value;
+  //   // You can perform further actions here, such as sending the buy request to the server
+  //   console.log('Buying ' + quantity + ' stocks.');
+  //   closeDialog();
+  // }
 
 document.addEventListener('DOMContentLoaded', function() {
     // Retrieve data from session storage
