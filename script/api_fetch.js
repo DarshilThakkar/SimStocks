@@ -69,49 +69,50 @@ function displayStockProfile(data) {
 }
 
 
-  // function openDialog() {
-  //   const dialog = document.getElementById('dialog');
-  //   var currprice=document.getElementById("price").textContent;
-  //   console.log(currprice);
-  //   document.getElementById("calcprice").textContent=currprice;
-  //   dialog.style.display = 'flex';
-  //   document.addEventListener('click', closeDialogOutside);
-  // }
+  function openDialog() {
+    const dialog = document.getElementById('dialog');
+    var currprice=document.getElementById("price").textContent;
+    console.log(currprice);
+    document.getElementById("calcprice").textContent=currprice;
+    dialog.style.display = 'flex';
+    document.addEventListener('click', closeDialogOutside);
+  }
 
-  // function closeDialog() {
-  //   const dialog = document.getElementById('dialog');
-  //   dialog.style.display = 'none';
-  //   document.removeEventListener('click', closeDialogOutside);
-  // }
+  function closeDialog() {
+    const dialog = document.getElementById('dialog');
+    dialog.style.display = 'none';
+    document.removeEventListener('click', closeDialogOutside);
+  }
 
-  // function closeDialogOutside(event) {
-  //   const dialog = document.getElementById('dialog');
-  //   if (event.target === dialog) {
-  //     closeDialog();
-  //   }
-  // }
+  function closeDialogOutside(event) {
+    const dialog = document.getElementById('dialog');
+    if (event.target === dialog) {
+      closeDialog();
+    }
+  }
 
-  // function calculator(){
-  //   var finalprice=document.getElementById("price").textContent;
-  //   finalprice=
-  //   var quan=document.getElementById("quantity").textContent;
-  //   calcprice=finalprice*quan;
-  //   console.log(calcprice);
-  //   document.getElementById("calcprice").textContent=calcprice;
-  // }
+  function calculator(){
+    var finalprice=document.getElementById("price").textContent;
+    finalprice=parseFloat(finalprice);
+    let quan=document.getElementById("quantity").textContent;
+    quan=parseFloat(quan);
+    calcprice=finalprice*quan;
+    console.log(calcprice);
+    document.getElementById("calcprice").textContent=calcprice;
+  }
 
-  // function confirmBuy() {
-  //   const dialog = document.getElementById('dialog');
-  //   var quantity = document.getElementById('quantity').value;
-  //   // You can perform further actions here, such as sending the buy request to the server
-  //   console.log('Buying ' + quantity + ' stocks.');
-  //   closeDialog();
-  // }
+  function confirmBuy() {
+    const dialog = document.getElementById('dialog');
+    var quantity = document.getElementById('quantity').value;
+    // You can perform further actions here, such as sending the buy request to the server
+    console.log('Buying ' + quantity + ' stocks.');
+    closeDialog();
+  }
 
 document.addEventListener('DOMContentLoaded', function() {
     // Retrieve data from session storage
     const userDataString = sessionStorage.getItem('UserCredential');
-    
+    console.log(userDataString);
     if (userDataString) {
         // Parse the JSON string to get the JavaScript object
         const userData = JSON.parse(userDataString);
