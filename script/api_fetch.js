@@ -60,7 +60,7 @@ function displayStockProfile(data) {
         <h2 id="calcprice">Current price: </h2>
         <div class="form-field">
         <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" onchange="calculator()" name="quantity" min="1" required>
+        <input type="number" id="quantity" oninput="calculator()" name="quantity" min="1" required>
         </div>
         <button class="btn btn-success" onclick="confirmBuy()">Confirm Buy</button>
     </div>
@@ -72,6 +72,7 @@ function displayStockProfile(data) {
   function openDialog() {
     const dialog = document.getElementById('dialog');
     var currprice=document.getElementById("price").textContent;
+    document.getElementById("quantity").value=1;
     console.log(currprice);
     document.getElementById("calcprice").textContent=currprice;
     dialog.style.display = 'flex';
@@ -93,12 +94,21 @@ function displayStockProfile(data) {
 
   function calculator(){
     var finalprice=document.getElementById("price").textContent;
+    finalprice=finalprice.substring(2,finalprice.length);
+    console.log(finalprice);
     finalprice=parseFloat(finalprice);
-    let quan=document.getElementById("quantity").textContent;
+    let quan=document.getElementById("quantity").value;
     quan=parseFloat(quan);
     calcprice=finalprice*quan;
-    console.log(calcprice);
-    document.getElementById("calcprice").textContent=calcprice;
+    if(isNaN(calcprice))
+    {
+      document.getElementById("calcprice").textContent=`$ ${finalprice}`;
+    }
+    else
+    {
+      calcprice = calcprice.toFixed(2);
+      document.getElementById("calcprice").textContent=`$ ${calcprice}`;
+    }
   }
 
   function confirmBuy() {
@@ -108,30 +118,3 @@ function displayStockProfile(data) {
     console.log('Buying ' + quantity + ' stocks.');
     closeDialog();
   }
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Retrieve data from session storage
-    const userDataString = sessionStorage.getItem('UserCredential');
-    console.log(userDataString);
-    if (userDataString) {
-        // Parse the JSON string to get the JavaScript object
-        const userData = JSON.parse(userDataString);
-        
-        // Display the user data on the page
-        // console.log(userData);
-        const userDataContainer1 = document.getElementsByClassName('Username');
-        for (let i = 0; i < userDataContainer1.length; i++)
-        {
-            userDataContainer1[i].innerHTML = `${userData.username}`;
-        }
-        
-        const userDataContainer2 = document.getElementsByClassName('Email');
-        for (let i = 0; i < userDataContainer2.length; i++)
-        {
-            userDataContainer2[i].innerHTML = `${userData.email}`;
-        }
-
-    } else {
-        window.location.replace("pages-login.html");
-    }
-});

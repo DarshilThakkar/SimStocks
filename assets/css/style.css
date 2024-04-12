@@ -1231,3 +1231,186 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+.partition {
+  display: flex;
+}
+
+.dialog-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-box {
+  background-color: #fff;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  text-align: center;
+}
+
+.dialog-box h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--theme-color);
+}
+
+/* Styles for form fields */
+.form-field {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.form-field button {
+  padding: 10px 20px;
+  background-color: var(--theme-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.form-field button:hover {
+  background-color: #003C80;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.btn-outline-success.blue {
+border-color: #028FF9;
+color: #028FF9;
+}
+
+.btn-outline-success.blue:hover {
+  background-color: blue !important;
+  border-color: blue !important;
+  color: white !important;
+
+}
+
+
+.left_1 {
+  flex: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+.right_1 {
+  flex: 1; /* Take remaining space */
+}
+
+.custom-card-width {
+  width: 250%; /* Set width to 100% or any other value you prefer */
+}
+
+
+#graph_id {
+  width: 50%; /* Take 50% of the parent width */
+}
+
+
+.custom_search-bar {
+position: relative;
+left: -5%;
+width: 300px;
+margin: 20px auto;
+}
+
+.search-container {
+position: relative;
+}
+
+.search-container input[type="text"] {
+width: 140%;
+padding: 6px;
+font-size: 16px;
+border: 2px solid #ccc;
+/* border-radius: 5px; */
+outline: none;
+}
+
+.product-list {
+position: absolute;
+top: 100%;
+left: 0;
+width: 140%;
+background-color: #fff;
+border: 1px solid #ccc;
+border-top: none;
+display: none;
+}
+
+.product-list .product-option {
+padding: 6px;
+cursor: pointer;
+}
+
+.product-list .product-option:hover {
+background-color: #f0f0f0;
+}
+
+.custom_search-bar button {
+position: absolute;
+top: 0;
+right: 0;
+left: 139.5%;
+width: 40px;
+height: 100%;
+background-color: #4153f1;
+border: none;
+/* border-radius: 5px; */
+color: #fff;
+font-size: 18px;
+cursor: pointer;
+}
+
+.custom_search-bar button:hover {
+background-color: #0056b3;
+}
+
+
+    /* Icons */
+    .custom_bi {
+      font-size: 1.2em;
+      vertical-align: middle;
+    }
