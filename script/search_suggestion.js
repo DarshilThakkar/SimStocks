@@ -6,7 +6,7 @@ function showSuggestions(value, maxSuggestions = 8) {
   productList.innerHTML = "";
 
   // Mock product suggestions (you can replace this with actual data)
-  fetch("script/output2.json")
+  fetch("script/stock_data.json")
     .then((response) => response.json())
     .then((data) => {
       products1 = data;

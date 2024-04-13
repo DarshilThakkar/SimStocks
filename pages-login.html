@@ -232,12 +232,18 @@
                       if (snapshot.exists()) {
                         const userData = snapshot.val();
                         console.log(userData[name]);
+                        const balance=JSON.stringify(userData.balance);
+                        console.log(balance);
                         const Username = JSON.stringify(userData.username);
                         sessionStorage.setItem("Username", Username);
                         const userDataString = JSON.stringify(userData);
                         sessionStorage.setItem(
                           "UserCredential",
                           userDataString
+                        );
+                        sessionStorage.setItem(
+                          "balance",
+                          balance
                         );
                       }
                     })

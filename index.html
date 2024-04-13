@@ -121,6 +121,9 @@
             </div>
         </div>
               
+        <div id="MainContent">
+          <p>degisuki hai dt.</p>
+        </div>
     <!-- ======= Footer ======= -->
     <center>
     <footer class="footer">
@@ -131,7 +134,6 @@
     </footer>
     </center>
     <!-- End Footer -->
-
     <a
       href="#"
       class="back-to-top d-flex align-items-center justify-content-center"
@@ -157,5 +159,39 @@
     <script src="script/web_socket.js"></script>
     <script src="script/load.js"></script>
     <script src="script/header.js"></script>
+    
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+import {
+getDatabase,
+ref,
+set,
+onValue,
+child,
+get,
+} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+apiKey: "AIzaSyC02oNzXbYzsD3bbLY6c7VgN0SbU3zDP_U",
+authDomain: "simstocks-417718.firebaseapp.com",
+projectId: "simstocks-417718",
+storageBucket: "simstocks-417718.appspot.com",
+messagingSenderId: "769226150702",
+appId: "1:769226150702:web:5cab37b5f8059a355ee0bf",
+measurementId: "G-JWD5QGH6R0",
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+function storestock(){
+  console.log(1);
+}
+    </script>
+    <script src="script/buy.js"></script>
   </body>
 </html>
