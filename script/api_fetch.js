@@ -41,6 +41,7 @@ function fetchStockProfile() {
           console.error('Error fetching stock profile:', error);
       });
 }
+
 function displayStockProfile(data) {
   const stockProfileDiv = document.getElementById('show1');
   stockProfileDiv.innerHTML = `

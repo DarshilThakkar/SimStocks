@@ -1,5 +1,3 @@
-// import { storestock } from './firebase_buy.js';
-
 function buy()
 {
     document.getElementById('buy_stock').innerHTML=
@@ -23,7 +21,7 @@ function buy()
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" oninput="calculator()" name="quantity" min="1" required>
         </div>
-        <button class="btn btn-success" id = "confirm_buy" onclick="confirmBuy()" >Confirm Buy</button>
+        <button class="btn btn-success" id = "confirm_buy" onclick="confirmBuy()">Confirm Buy</button>
     </div>
     </div>`
 }
@@ -103,16 +101,23 @@ function openDialog() {
     var itemCount = ul.childElementCount;
     if(itemCount==2)
     {
-
+      
     }
     else
     {
-        //  console.log(app);
-        storestock();
-    }
+      console.log(1);
+      document.getElementById("temp").click();
+      // const dbRef = ref(getDatabase());
+      // get(child(dbRef, "users/" + user))
+      // .then((snapshot) => {
+      //     if (snapshot.exists()) {
+      //         const userData = snapshot.val();
+      //         email = userData[stock_fetch1];
+      //     }
+      // })};
+    }}
     // const dialog = document.getElementById('dialog');
     // var quantity = document.getElementById('quantity').value;
     // // You can perform further actions here, such as sending the buy request to the server
     // console.log('Buying ' + quantity + ' stocks.');
     // closeDialog();
-  }

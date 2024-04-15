@@ -1,32 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-import {
-getDatabase,
-ref,
-set,
-onValue,
-child,
-get,
-} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-apiKey: "AIzaSyC02oNzXbYzsD3bbLY6c7VgN0SbU3zDP_U",
-authDomain: "simstocks-417718.firebaseapp.com",
-projectId: "simstocks-417718",
-storageBucket: "simstocks-417718.appspot.com",
-messagingSenderId: "769226150702",
-appId: "1:769226150702:web:5cab37b5f8059a355ee0bf",
-measurementId: "G-JWD5QGH6R0",
-};
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
-export function storestock(){
+document.getElementById("confirm_buy").addEventListener("click", function(event) {
+    event.preventDefault();
     console.log(1);
     // stock name : [price,quantity]
     var user = sessionStorage.getItem("username");
@@ -53,7 +28,7 @@ export function storestock(){
             const userData = snapshot.val();
             email = userData[stock_fetch1];
         }
-    })};
+    })});
 
     // stock_quan
     // change balance
