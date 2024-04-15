@@ -199,6 +199,7 @@
       var stock_fetch1 = document.getElementById("stock_fetch").value;
       var calcprice = document.getElementById("calcprice").textContent;
       var quantity = document.getElementById("quantity").value;
+      quantity=parseInt(quantity);
       calcprice = calcprice.substring(2, calcprice.length);
       calcprice = parseFloat(calcprice);
       //console.log(stock_fetch1);
@@ -219,7 +220,7 @@
           }
       }
       const dbRef = ref(getDatabase());
-      var stock,balance;
+      var stock,balance,currquantity,currprice;
       get(child(dbRef, 'users/' + user))
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -239,8 +240,45 @@
             [stock_fetch1]: {calcprice: calcprice,quantity: quantity},
             balance: balance,
         })
-      }})
+      }
+      else
+      {
+        get(child(dbRef, 'users/' + user + '/' +  stock_fetch1))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            console.log(userData);
+            currquantity = userData["quantity"];
+            currprice = userData["calcprice"];
+          }}).then(() => {
+              quantity=quantity+currquantity;
+              calcprice=(currprice*currquantity+currprice)/quantity;
+              const db=getDatabase();
+              const reference = ref(db,'users/' + user);
+              update(reference, {
+                  [stock_fetch1]: {calcprice: calcprice,quantity: quantity},
+                  balance: balance,
+              })});
+      }
+    })
     });
+    function balancecheck(){
+      var user = sessionStorage.getItem("Username");
+      const dbRef = ref(getDatabase());
+      var balance;
+      get(child(dbRef, 'users/' + user))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          console.log(userData);
+          balance = userData["balance"];
+        }
+      }).then(() => {
+        console.log(balance);
+        document.getElementById("temp").textContent=balance;
+      })
+    }
+    setTimeout(balancecheck,0);
     </script>
     <script src="script/buy.js"></script>
     <script src="script/web_socket.js"></script>

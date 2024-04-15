@@ -83,7 +83,11 @@ function openDialog() {
       document.getElementById("calcprice").innerHTML=`$ ${calcprice}`;
       amount_total = calcprice;
     }
-    if(amount_total > 500)
+    var balance=document.getElementById("temp").textContent;
+    console.log(balance);
+    balance=parseFloat(balance);
+    console.log(balance);
+    if(amount_total > balance)
     {
         var ul = document.getElementById("buy_list");
         var itemCount = ul.childElementCount;
