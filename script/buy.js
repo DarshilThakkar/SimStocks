@@ -184,7 +184,7 @@ function confirmBuy() {
               return;
           }
           document.getElementById("balance_temp").click();
-
+          document.getElementById("buy_quantity").value=0;
           closeDialog();
       }
   }, 100);
@@ -223,6 +223,7 @@ function confirmSell() {
         }
 
         document.getElementById("sell_temp").click();
+        document.getElementById("sell_quantity").value=0;
         closeDialog();
     }
   }, 100);
