@@ -56,7 +56,7 @@
 
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="users-profile.html">
+          <a class="nav-link collapsed" href="portfolio.html">
             <i class="bi bi-person"></i>
             <span>My Portfolio</span>
           </a>
@@ -130,6 +130,7 @@
         <!-- OUR KAND -->
         <div>
           <button class="invisible" id="balance_temp" style="display: none;"></button>
+          <button class="invisible" id="sell_temp" style="display: none;"></button>
           <button class="invisible" id="firebase_balance_check" style="display: none;"></button>
           <button class="invisible" id="firebase_quantity_check" style="display: none;"></button>
           <button class="invisible" id="stock_company" style="display: none;"></button>
@@ -196,6 +197,8 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
       console.log(app);
+      
+      //
       document.getElementById("balance_temp").addEventListener("click", function(event) {
       //event.preventDefault();
       //console.log(1);
@@ -259,6 +262,8 @@
       }
     })
     });
+
+    //
     document.getElementById("firebase_balance_check").addEventListener("click", function(event) {
       var user = sessionStorage.getItem("Username");
       user = user.substring(1, user.length - 1);
@@ -276,23 +281,75 @@
         document.getElementById("balance_temp").textContent=balance;
       })
     })
+
+    //
     document.getElementById("firebase_quantity_check").addEventListener("click", function(event) {
+      //console.log(1);
       var user = sessionStorage.getItem("Username");
+      var company = document.getElementById("stock_company").textContent;
       user = user.substring(1, user.length - 1);
       const dbRef = ref(getDatabase());
-      var balance;      
-      get(child(dbRef, 'users/' + user))
+      var quantity;      
+      get(child(dbRef, 'users/' + user + '/' + company))
       .then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
           console.log(userData);
-          balance = userData["balance"];
+          quantity = userData["quantity"];
+        }
+        else
+        {
+          quantity=0;
         }
       }).then(() => {
-        console.log(balance);
-        document.getElementById("balance_temp").textContent=balance;
+        document.getElementById("firebase_quantity_check").textContent=quantity;
       })
     });
+
+    document.getElementById("sell_temp").addEventListener("click", function(event) {
+      var user = sessionStorage.getItem("Username");
+      var company = document.getElementById("stock_company").textContent;
+      var quantity = parseInt(document.getElementById("sell_quantity").value);
+      var calcprice = parseFloat(document.getElementById("sell_calcprice").textContent);
+      console.log(calcprice);
+      user = user.substring(1, user.length - 1);
+      const dbRef = ref(getDatabase());
+      var currquantity;      
+      get(child(dbRef, 'users/' + user + '/' + company))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          console.log(userData);
+          currquantity = userData["quantity"];
+        }
+      }).then(()=>{
+        currquantity-=quantity;
+        const db=getDatabase();
+        const reference = ref(db,'users/' + user + '/' + company);
+        update(reference, {
+          quantity: currquantity,
+        });
+        });
+///////////
+        var currbalance;
+        get(child(dbRef, 'users/' + user))
+        .then((snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          console.log(userData);
+          currbalance = userData["balance"];
+        }
+      }).then(()=>{
+        console.log(currbalance);
+        console.log(calcprice);
+        currbalance+=calcprice;
+        const db=getDatabase();
+        const reference = ref(db,'users/' + user);
+        update(reference, {
+          balance: currbalance,
+        });
+        });
+      })
     </script>
     <script src="script/buy.js"></script>
     <script src="script/web_socket.js"></script>

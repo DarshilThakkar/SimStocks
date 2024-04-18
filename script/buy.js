@@ -86,6 +86,9 @@ function buyCalculator() {
   finalprice = finalprice.substring(2, finalprice.length);
   finalprice = parseFloat(finalprice);
   let quan = document.getElementById("buy_quantity").value;
+  //
+  //
+  var balance = parseFloat(document.getElementById("balance_temp").textContent);
   if(quan == "")
   {
     quan = 0;
@@ -93,7 +96,38 @@ function buyCalculator() {
   quan = parseFloat(quan);
   calcprice = finalprice * quan;
   calcprice = calcprice.toFixed(2);
-  document.getElementById("buy_calcprice").innerHTML = `$ ${calcprice}`;
+  balance = parseFloat(balance);
+  console.log(balance);
+  var balanceCheckInterval = setInterval(function() {
+    document.getElementById("firebase_balance_check").click();
+    var balance = parseFloat(document.getElementById("balance_temp").textContent);
+    if (!isNaN(balance)) {
+        clearInterval(balanceCheckInterval);
+        if (calcprice > balance) {
+          if(document.getElementById('buy_list').getElementsByTagName('li').length==1)
+          {
+            var li=document.createElement('li');
+            li.textContent="Not Sufficient Balance";
+            document.getElementById('buy_list').appendChild(li);
+          }
+        }
+        else
+        {
+          if(document.getElementById('buy_list').getElementsByTagName('li').length==2)
+          {
+            var list=document.getElementById('buy_list');
+            list.removeChild(list.lastChild);
+          }
+        }
+        document.getElementById("buy_calcprice").innerHTML = `$ ${calcprice}`;
+    }
+  }, 100);
+  // if(balance<calcprice)
+  // {
+  //   var li=document.createElement('li');
+  //   li.textContent="Not Sufficient Balance";
+  //   document.getElementById('buy_list').appendChild(li);
+  // }
 }
 
 function sellCalculator() {
@@ -108,17 +142,40 @@ function sellCalculator() {
   quan = parseFloat(quan);
   calcprice = finalprice * quan;
   calcprice = calcprice.toFixed(2);
-  document.getElementById("sell_calcprice").innerHTML = `$ ${calcprice}`;
+  var quantityCheckInterval = setInterval(function() {
+    document.getElementById("firebase_quantity_check").click();
+    var quantity = parseFloat(document.getElementById("firebase_quantity_check").textContent);
+    if (!isNaN(quantity)) {
+        clearInterval(quantityCheckInterval);
+        if (quan > quantity) {
+          if(document.getElementById('sell_list').getElementsByTagName('li').length==1)
+          {
+            var li=document.createElement('li');
+            li.textContent="Not Sufficient Balance";
+            document.getElementById('sell_list').appendChild(li);
+          }
+        }
+        else
+        {
+          if(document.getElementById('sell_list').getElementsByTagName('li').length==2)
+          {
+            var list=document.getElementById('sell_list');
+            list.removeChild(list.lastChild);
+          }
+        }
+        document.getElementById("sell_calcprice").innerHTML = `$ ${calcprice}`;
+    }
+  }, 100);
 }
 
 function confirmBuy() {
   var quantity = parseFloat(document.getElementById("buy_quantity").value);
   var pricePerUnit = parseFloat(document.getElementById("price").textContent.substring(2));
   var totalCost = quantity * pricePerUnit;
-
-  document.getElementById("firebase_balance_check").click(); // Trigger balance check
+ // Trigger balance check
 
   var balanceCheckInterval = setInterval(function() {
+      document.getElementById("firebase_balance_check").click();
       var balance = parseFloat(document.getElementById("balance_temp").textContent);
       if (!isNaN(balance)) {
           clearInterval(balanceCheckInterval);
@@ -143,22 +200,37 @@ function confirmSell() {
   var quantity = parseFloat(document.getElementById("sell_quantity").value);
   var pricePerUnit = parseFloat(document.getElementById("price").textContent.substring(2));
   var totalGain = quantity * pricePerUnit;
-
+  let quan = document.getElementById("sell_quantity").value;
   document.getElementById("firebase_balance_check").click();
 
-  var balanceCheckInterval = setInterval(function() {
-      var balance = parseFloat(document.getElementById("balance_temp").textContent);
-      if (!isNaN(balance)) {
-          clearInterval(balanceCheckInterval);
+  // var balanceCheckInterval = setInterval(function() {
+  //     var balance = parseFloat(document.getElementById("balance_temp").textContent);
+  //     if (!isNaN(balance)) {
+  //         clearInterval(balanceCheckInterval);
 
-          console.log("Sell confirmed");
-          console.log("Quantity:", quantity);
-          console.log("Total gain:", totalGain);
+  //         console.log("Sell confirmed");
+  //         console.log("Quantity:", quantity);
+  //         console.log("Total gain:", totalGain);
 
-          balance += totalGain;
-          updateBalance(balance);
-          closeDialog();
-      }
+  //         balance += totalGain;
+  //         updateBalance(balance);
+  //         closeDialog();
+  //     }
+  // }, 100);
+
+  var quantityCheckInterval = setInterval(function() {
+    document.getElementById("firebase_quantity_check").click();
+    var quantity = parseFloat(document.getElementById("firebase_quantity_check").textContent);
+    if (!isNaN(quantity)) {
+        clearInterval(quantityCheckInterval);
+        if (quan > quantity) {
+          console.log("Insufficient quantity to sell");
+          return;
+        }
+
+        document.getElementById("sell_temp").click();
+        closeDialog();
+    }
   }, 100);
 }
 
