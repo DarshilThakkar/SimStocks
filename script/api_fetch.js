@@ -48,6 +48,7 @@ function displayStockProfile(data) {
       <p><strong></strong><img src=${data.logo} width=60px></img></p>
       <h2><b>${data.name} (${data.ticker})</b></h2>
   `;
+  document.getElementById("stock_company").textContent=`${data.name}`;
   const stockProfileDiv2 = document.getElementById('show2');
   stockProfileDiv2.innerHTML = `
       <p><strong>Industry:</strong> ${data.finnhubIndustry}</p>

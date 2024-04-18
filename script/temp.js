@@ -50,7 +50,7 @@ function buy()
 function openBuyDialog() {
   const dialog = document.getElementById('buy_dialog');
   var currprice = document.getElementById("price").textContent;
-  // document.getElementById("buy_quantity").value = 1;
+  document.getElementById("buy_quantity").value = 1;
   document.getElementById("buy_calcprice").textContent = currprice;
   dialog.style.display = 'flex';
   document.addEventListener('click', closeDialogOutside);
@@ -59,7 +59,7 @@ function openBuyDialog() {
 function openSellDialog() {
   const dialog = document.getElementById('sell_dialog');
   var currprice = document.getElementById("price").textContent;
-  // document.getElementById("sell_quantity").value = 1;
+  document.getElementById("sell_quantity").value = 1;
   document.getElementById("sell_calcprice").textContent = currprice;
   dialog.style.display = 'flex';
   document.addEventListener('click', closeDialogOutside);
@@ -86,10 +86,6 @@ function buyCalculator() {
   finalprice = finalprice.substring(2, finalprice.length);
   finalprice = parseFloat(finalprice);
   let quan = document.getElementById("buy_quantity").value;
-  if(quan == "")
-  {
-    quan = 0;
-  }
   quan = parseFloat(quan);
   calcprice = finalprice * quan;
   calcprice = calcprice.toFixed(2);
@@ -101,10 +97,6 @@ function sellCalculator() {
   finalprice = finalprice.substring(2, finalprice.length);
   finalprice = parseFloat(finalprice);
   let quan = document.getElementById("sell_quantity").value;
-  if(quan == "")
-  {
-    quan = 0;
-  }
   quan = parseFloat(quan);
   calcprice = finalprice * quan;
   calcprice = calcprice.toFixed(2);
@@ -112,56 +104,14 @@ function sellCalculator() {
 }
 
 function confirmBuy() {
-  var quantity = parseFloat(document.getElementById("buy_quantity").value);
-  var pricePerUnit = parseFloat(document.getElementById("price").textContent.substring(2));
-  var totalCost = quantity * pricePerUnit;
 
-  document.getElementById("firebase_balance_check").click(); // Trigger balance check
-
-  var balanceCheckInterval = setInterval(function() {
-      var balance = parseFloat(document.getElementById("balance_temp").textContent);
-      if (!isNaN(balance)) {
-          clearInterval(balanceCheckInterval);
-          if (totalCost > balance) {
-              console.log("Insufficient balance to buy");
-              return;
-          }
-          document.getElementById("balance_temp").click();
-          console.log("Buy confirmed");
-          console.log("Quantity:", quantity);
-          console.log("Total cost:", totalCost);
-
-          balance -= totalCost;
-          updateBalance(balance);
-
-          closeDialog();
-      }
-  }, 100);
+  var balance = document.getElementById("balance_temp").textContent;
+  console.log(balance);
+  closeDialog();
 }
 
 function confirmSell() {
-  var quantity = parseFloat(document.getElementById("sell_quantity").value);
-  var pricePerUnit = parseFloat(document.getElementById("price").textContent.substring(2));
-  var totalGain = quantity * pricePerUnit;
-
-  document.getElementById("firebase_balance_check").click();
-
-  var balanceCheckInterval = setInterval(function() {
-      var balance = parseFloat(document.getElementById("balance_temp").textContent);
-      if (!isNaN(balance)) {
-          clearInterval(balanceCheckInterval);
-
-          console.log("Sell confirmed");
-          console.log("Quantity:", quantity);
-          console.log("Total gain:", totalGain);
-
-          balance += totalGain;
-          updateBalance(balance);
-          closeDialog();
-      }
-  }, 100);
-}
-
-function updateBalance(newBalance) {
-  document.getElementById("balance_temp").click();
+  // Your confirmation logic for sell goes here
+  console.log('Sell confirmed');
+  closeDialog();
 }

@@ -78,6 +78,13 @@ function socket() {
       document.getElementById(
         "price"
       ).innerHTML = `<h2><b>$&nbsp${price}</b></h2>`;
+
+      document.getElementById(
+        "calcprice"
+      ).innerHTML = `<h2><b>$&nbsp${price}</b></h2>`;
+
+
+      calculator();
       if (price != stock_cords[stock_cords.length - 1]) {
         stock_cords.push(`${price}`);
         if (live == "Live") {
@@ -222,9 +229,9 @@ function renderGraph(stock_cords234,type) {
     // },
   }).render().then(()=>{
     let x = document.getElementById(type);  
-    x.style.backgroundColor = "blue";
-    x.style.borderColor = "blue";
-    x.style.color = "white";  
+    // x.style.backgroundColor = "blue";
+    // x.style.borderColor = "blue";
+    // x.style.color = "white";  
   });
 }
 
