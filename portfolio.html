@@ -23,6 +23,17 @@
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <style>
+    #stockTable {
+      text-align: center;
+    }
+
+    #stockTable th, #stockTable td {
+      text-align: center;
+      vertical-align: middle;
+      padding: 10px; 
+    }
+  </style>
 </head>
 
 <body>
@@ -101,6 +112,36 @@
 
     <section class="section profile">
       <div class="row">
+        
+        <div class="col-xl-6">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="assets/img/investment.png" alt="Profile"><br>
+              <h2>Total Investment</h2><br>
+              
+              <h1 id = "invested" style = "font-weight: bold;">
+              </h1>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-xl-6">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="assets/img/investment.png" alt="Profile"><br>
+              <h2>Current Valuation</h2><br>
+              <h1 id = "current" style = "font-weight: bold;">
+              </h1>
+            </div>
+          </div>
+
+        </div>
+
+        </div>
         <div class="col-xl-12">
           <div class="card">
             <div class="card-body pt-3">
@@ -126,11 +167,25 @@
                                   <th><b>Quantity</b></th>
                                   <th><b>Average Price</b></th>
                                   <th><b>Investment</b></th>
+                                  <th><b>Current</b></th>
                                   <th><b>Details</b></th>
                                 </tr>
                               </thead>
                               <tbody>
-                                <!-- Table body content will be dynamically populated by Firebase data -->
+                                <tr></tr>
+                                <!-- <tr>
+                                  <th><b>Stock Name</b></th>
+                                  <th><b>Quantity</b></th>
+                                  <th><b>Average Price</b></th>
+                                  <th><b>Investment</b></th>
+                                  <th><b>Details</b></th>
+                                </tr>
+                                <tr>
+                                  <th><b>Stock Name</b></th>
+                                  <th><b>Quantity</b></th>
+                                  <th><b>Average Price</b></th>
+                                  <th><b>Investment</b></th>
+                                  <th><b>Details</b></th> -->
                               </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
@@ -166,7 +221,7 @@
 
   <!-- Firebase and Main JS File -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
       import {
       getDatabase,
@@ -196,57 +251,58 @@
     
     // Reference to the "stockDetails" node in your Firebase database
     const stockDetailsRef = ref(getDatabase());
-    
+    //document.getElementById('stockTable').document.getElementsByTagName(tbody).innerHTML="";
     // Function to fetch and display stock details in the table
-    function displayStockDetails() {
-      const table=document.getElementById('stockTable');
-      var user = sessionStorage.getItem("Username");
-      onValue(stockDetailsRef, (snapshot) => {
-        const stockData = snapshot.val();
-        user = user.substring(1, user.length - 1);
-        console.log(user);
-        console.log(stockData["users"][user]);
-        // console.log(1);]
-        //stockTableBody.innerHTML = '';
-        for(var val in stockData["users"][user])
-        {
-          console.log(val);
-          console.log(stockData["users"][user][val]);
-          //var stockTableBody = document.getElementById('stockTableBody');
-          const newrow = table.insertRow();
-          newrow.innerHTML = `
-              <td>${val}</td>
-              <td>${stockData["users"][user][val]["quantity"]}</td>
-              <td>${stockData["users"][user][val]["calcprice"]}</td>
-              <td>${stockData["users"][user][val]["calcprice"]*stockData["users"][user][val]["quantity"]}</td>
-              <td>${stockData["users"][user][val]}</td>`;
-              return;
-            //stockTableBody.appendChild(newRow);
-          //console.log(val["quantity"]);
-        }
-        
-        // // Clear existing table content
-        // stockTableBody.innerHTML = '';
-        // // Iterate through each stock entry and populate the table
-        // for (const key in stockData["users"][user]) {
-        //   if (Object.hasOwnProperty.call(stockData["users"][user], key)) {
-        //     const stock = stockData["users"][user][key];
-        //     const newRow = document.createElement('tr');
-        //     console.log(key);
-        //     // newRow.innerHTML = `
-        //     //   <td>${stock.us}</td>
-        //     //   <td>${stock.quantity}</td>
-        //     //   <td>${stock.investment}</td>
-        //     //   <td>${stock.valuation}</td>
-        //     //   <td>${stock.rate}</td>
-        //     // `;
-        //     // stockTableBody.appendChild(newRow);
-        //   }
-        });
-      }
+    // Function to fetch and display stock details in the table
+function displayStockDetails() {
+  const table = document.getElementById('stockTable');
+  var user = sessionStorage.getItem("Username");
+  onValue(stockDetailsRef, (snapshot) => {
+    const stockData = snapshot.val();
+    user = user.substring(1, user.length - 1);
+    console.log(user);
+    console.log(stockData["users"][user]);
+    let total_inv = 0.0;
+    total_inv=parseFloat(total_inv);
+    for (var val in stockData["users"][user]) {
+      if (val === 'balance') break;
+      if (stockData["users"][user][val]["quantity"] == 0) continue;
+      console.log(stockData["users"][user][val]);
+      var one = parseFloat(stockData["users"][user][val]["calcprice"]);
+      var two = (parseFloat(stockData["users"][user][val]["quantity"]));
+      total_inv += ((one * two));
+    }
+    document.getElementById("invested").textContent = `$ ${total_inv.toFixed(2)}`;
+    document.getElementById("current").textContent = `$ ${total_inv.toFixed(2)}`;
 
-    // Call the function to display stock details
-    displayStockDetails();
+    // Clear existing rows before adding new ones
+    // table.innerHTML = `<thead><tr><th><b>Stock Name</b></th><th><b>Quantity</b></th><th><b>Average Price</b></th><th><b>Investment</b></th><th><b>Details</b></th></tr></thead><tbody id="stockcontent"></tbody>`;
+
+    const stockTableBody = document.getElementById('stockTable');
+    for (var val in stockData["users"][user]) {
+      console.log(val);
+      if (val === 'balance') break;
+      if (stockData["users"][user][val]["quantity"] === 0) continue;
+      console.log(stockData["users"][user][val]);
+
+      const newrow = stockTableBody.insertRow();
+      newrow.innerHTML = `
+        <td>${val}</td>
+        <td>${stockData["users"][user][val]["quantity"]}</td>
+        <td>${stockData["users"][user][val]["calcprice"]}</td>
+        <td>${(stockData["users"][user][val]["calcprice"] * stockData["users"][user][val]["quantity"]).toFixed(2)}</td>
+        <td>${(stockData["users"][user][val]["calcprice"] * stockData["users"][user][val]["quantity"]).toFixed(2)}</td>
+        <td><button class="btn btn-success green" style="background-color: #4152F1">Select Stock</button></td>
+      `;
+    }
+
+    // Reinitialize DataTable after adding rows
+    const simpleDatatables = new SimpleDatatables.default(table);
+  });
+}
+
+// Call the function to display stock details
+displayStockDetails();
   </script>
   <script src="assets/js/main.js"></script>
   <!-- Additional scripts go here -->

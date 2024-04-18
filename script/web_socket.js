@@ -55,7 +55,7 @@ function socket() {
   );
   var stock_fetch1 = document.getElementById("stock_fetch").value;
   var stock_fetch2 = stock_fetch1;
-  stock_fetch2.toUpperCase();
+  stock_fetch2=stock_fetch2.toUpperCase();
   for (let i = 0; i < products1.length; i++) {
     let companyName = Object.keys(products1[i])[0];
     if (stock_fetch2 === products1[i][companyName]) {
@@ -67,6 +67,7 @@ function socket() {
       break;
     }
   }
+  stock_fetch1=stock_fetch1.toUpperCase();
   socket.addEventListener("open", function (event) {
     socket.send(JSON.stringify({ type: "subscribe", symbol: stock_fetch1 }));
   });

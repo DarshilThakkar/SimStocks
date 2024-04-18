@@ -55,9 +55,9 @@ header_template.innerHTML = `
       </li>
 
       <li>
-        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-          <i class="bi bi-gear"></i>
-          <span>Account Settings</span>
+        <a class="dropdown-item d-flex align-items-center" href="portfolio.html">
+          <i class="bi bi-coin"></i>
+          <span>My Portfolio</span>
         </a>
       </li>
       <li>

@@ -67,7 +67,9 @@ function openSellDialog() {
 
 function closeDialog() {
   const buyDialog = document.getElementById('buy_dialog');
+  buyDialog.value=0;
   const sellDialog = document.getElementById('sell_dialog');
+  sellDialog.value=0;
   buyDialog.style.display = 'none';
   sellDialog.style.display = 'none';
   document.removeEventListener('click', closeDialogOutside);
