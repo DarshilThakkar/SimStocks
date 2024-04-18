@@ -310,7 +310,9 @@
       var user = sessionStorage.getItem("Username");
       var company = document.getElementById("stock_company").textContent;
       var quantity = parseInt(document.getElementById("sell_quantity").value);
-      var calcprice = parseFloat(document.getElementById("sell_calcprice").textContent);
+      var calcprice =document.getElementById("sell_calcprice").textContent;
+      calcprice = calcprice.substring(2, calcprice.length);
+      calcprice = parseFloat(calcprice);
       console.log(calcprice);
       user = user.substring(1, user.length - 1);
       const dbRef = ref(getDatabase());

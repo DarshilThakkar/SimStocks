@@ -184,12 +184,6 @@ function confirmBuy() {
               return;
           }
           document.getElementById("balance_temp").click();
-          console.log("Buy confirmed");
-          console.log("Quantity:", quantity);
-          console.log("Total cost:", totalCost);
-
-          balance -= totalCost;
-          updateBalance(balance);
 
           closeDialog();
       }
@@ -232,8 +226,4 @@ function confirmSell() {
         closeDialog();
     }
   }, 100);
-}
-
-function updateBalance(newBalance) {
-  document.getElementById("balance_temp").click();
 }
