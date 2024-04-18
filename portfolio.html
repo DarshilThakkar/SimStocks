@@ -124,12 +124,12 @@
                                 <tr>
                                   <th><b>Stock Name</b></th>
                                   <th><b>Quantity</b></th>
+                                  <th><b>Average Price</b></th>
                                   <th><b>Investment</b></th>
-                                  <th><b>Valuation</b></th>
-                                  <th><b>Rate</b></th>
+                                  <th><b>Details</b></th>
                                 </tr>
                               </thead>
-                              <tbody id="stockTableBody">
+                              <tbody>
                                 <!-- Table body content will be dynamically populated by Firebase data -->
                               </tbody>
                             </table>
@@ -160,17 +160,11 @@
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Firebase and Main JS File -->
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
@@ -205,6 +199,7 @@
     
     // Function to fetch and display stock details in the table
     function displayStockDetails() {
+      const table=document.getElementById('stockTable');
       var user = sessionStorage.getItem("Username");
       onValue(stockDetailsRef, (snapshot) => {
         const stockData = snapshot.val();
@@ -212,21 +207,22 @@
         console.log(user);
         console.log(stockData["users"][user]);
         // console.log(1);]
-        stockTableBody.innerHTML = '';
+        //stockTableBody.innerHTML = '';
         for(var val in stockData["users"][user])
         {
           console.log(val);
           console.log(stockData["users"][user][val]);
-          var stockTableBody = document.getElementById('stockTableBody');
-          var newRow = document.createElement('tr');
-          newRow.innerHTML = `
+          //var stockTableBody = document.getElementById('stockTableBody');
+          const newrow = table.insertRow();
+          newrow.innerHTML = `
               <td>${val}</td>
-              <td>${val}</td>
-              <td>${val}</td>
-              <td>${val}</td>
-              <td>${val}</td>`;
-              stockTableBody.appendChild(newRow);
-          console.log(val["quantity"]);
+              <td>${stockData["users"][user][val]["quantity"]}</td>
+              <td>${stockData["users"][user][val]["calcprice"]}</td>
+              <td>${stockData["users"][user][val]["calcprice"]*stockData["users"][user][val]["quantity"]}</td>
+              <td>${stockData["users"][user][val]}</td>`;
+              return;
+            //stockTableBody.appendChild(newRow);
+          //console.log(val["quantity"]);
         }
         
         // // Clear existing table content
