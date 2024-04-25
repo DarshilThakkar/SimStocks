@@ -13,7 +13,7 @@ header_template.innerHTML = `
     <div class="search-container">
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Search Stocks"
         title="Enter search keyword"
         id="stock_fetch"
         oninput="showSuggestions(this.value)"
