@@ -18,7 +18,7 @@ function buy()
     <button type="button" class="btn btn-danger" onclick="openSellDialog()" style='width:18%'>Sell</button>\
 
     <div id="buy_dialog" class="dialog-container">
-        <div class="dialog-box">
+        <div class="dialog-box" id="buy_box">
             <h2>Confirm Buy</h2>
             <ul id= "buy_list">
                 <li><h2 id="buy_calcprice"></h2></li>
@@ -32,7 +32,7 @@ function buy()
     </div>
 
     <div id="sell_dialog" class="dialog-container">
-        <div class="dialog-box">
+        <div class="dialog-box" id="sell_box">
             <h2>Confirm Sell</h2>
             <ul id= "sell_list">
                 <li><h2 id="sell_calcprice"></h2></li>
@@ -187,7 +187,10 @@ function confirmBuy() {
           }
           document.getElementById("balance_temp").click();
           document.getElementById("buy_quantity").value=0;
-          closeDialog();
+          document.getElementById('buy_box').innerHTML = "Stock Bought Succesfully!!";
+            setTimeout(function() {
+                closeDialog();
+            }, 2000);
       }
   }, 100);
 }
@@ -226,7 +229,10 @@ function confirmSell() {
 
         document.getElementById("sell_temp").click();
         document.getElementById("sell_quantity").value=0;
-        closeDialog();
+        document.getElementById('sell_box').innerHTML = "Stock Sold Succesfully!!";
+        setTimeout(function() {
+            closeDialog();
+        }, 2000);
     }
   }, 100);
 }
