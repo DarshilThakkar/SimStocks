@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     // Retrieve data from session storage
     const userDataString = sessionStorage.getItem('UserCredential');
