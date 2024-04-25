@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+
 const header_template = document.getElementById('header_template');
 header_template.innerHTML = `
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -88,4 +88,3 @@ header_template.innerHTML = `
 </header>
 <!-- End Header -->
   `;
-});
