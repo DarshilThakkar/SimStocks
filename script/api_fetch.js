@@ -9,6 +9,7 @@ document.getElementById("stock_fetch").addEventListener('keydown',function(event
 
 function fetchStockProfile() {
     
+    document.getElementById('babu').innerHTML = ``;
     document.getElementById('MainContent').innerHTML = ``;
     document.getElementById('show1').innerHTML = ``;
     document.getElementById('price').innerHTML = ``;
